@@ -31,90 +31,83 @@ export default function Register() {
     };
 
     return (
-        <GuestLayout>
+            <GuestLayout props={[]}>
             <Head title="Register" />
-
+            <div className="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0">
+            <div className="max-w-6xl mx-auto sm:px-6 lg:px-2 lg:-mt-52">
+            <div className='w-[500px] m-2 p-10 mx-auto rounded-md border-gray-200 border bg-white '>
+            <div className='mb-10 text-center font-semibold'>Create Your Account</div>
             <form onSubmit={submit}>
-                <div>
-                    <InputLabel forInput="name" value="Name" />
-
-                    <TextInput
-                        id="name"
-                        name="name"
-                        value={data.name}
-                        className="mt-1 block w-full"
-                        autoComplete="name"
-                        isFocused={true}
-                        handleChange={onHandleChange}
-                        required
-                    />
-
-                    <InputError message={errors.name} className="mt-2" />
-                </div>
-
-                <div className="mt-4">
-                    <InputLabel forInput="email" value="Email" />
-
-                    <TextInput
-                        id="email"
-                        type="email"
-                        name="email"
-                        value={data.email}
-                        className="mt-1 block w-full"
-                        autoComplete="username"
-                        handleChange={onHandleChange}
-                        required
-                    />
-
-                    <InputError message={errors.email} className="mt-2" />
-                </div>
-
-                <div className="mt-4">
-                    <InputLabel forInput="password" value="Password" />
-
-                    <TextInput
-                        id="password"
-                        type="password"
-                        name="password"
-                        value={data.password}
-                        className="mt-1 block w-full"
-                        autoComplete="new-password"
-                        handleChange={onHandleChange}
-                        required
-                    />
-
-                    <InputError message={errors.password} className="mt-2" />
-                </div>
-
-                <div className="mt-4">
-                    <InputLabel forInput="password_confirmation" value="Confirm Password" />
-
-                    <TextInput
-                        id="password_confirmation"
-                        type="password"
-                        name="password_confirmation"
-                        value={data.password_confirmation}
-                        className="mt-1 block w-full"
-                        handleChange={onHandleChange}
-                        required
-                    />
-
-                    <InputError message={errors.password_confirmation} className="mt-2" />
-                </div>
-
-                <div className="flex items-center justify-end mt-4">
-                    <Link
-                        href={route('login')}
-                        className="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
-                    >
-                        Already registered?
-                    </Link>
-
-                    <PrimaryButton className="ml-4" processing={processing}>
-                        Register
-                    </PrimaryButton>
-                </div>
+            <div>
+            <InputLabel forInput="name" value="Name" />
+            <TextInput
+                id="name"
+                name="name"
+                value={data.name}
+                className="mt-1 block w-full"
+                autoComplete="name"
+                isFocused={true}
+                handleChange={onHandleChange}
+                required
+            />
+            <InputError message={errors.name} className="mt-2" />
+            </div>
+            <div className="mt-4">
+            <InputLabel forInput="email" value="Email" />
+            <TextInput
+                id="email"
+                type="email"
+                name="email"
+                value={data.email}
+                className="mt-1 block w-full"
+                autoComplete="username"
+                handleChange={onHandleChange}
+                required
+            />
+            <InputError message={errors.email} className="mt-2" />
+            </div>
+            <div className="mt-4">
+            <InputLabel forInput="password" value="Password" />
+            <TextInput
+                id="password"
+                type="password"
+                name="password"
+                value={data.password}
+                className="mt-1 block w-full"
+                autoComplete="new-password"
+                handleChange={onHandleChange}
+                required
+            />
+            <InputError message={errors.password} className="mt-2" />
+            </div>
+            <div className="mt-4">
+            <InputLabel forInput="password_confirmation" value="Confirm Password" />
+            <TextInput
+                id="password_confirmation"
+                type="password"
+                name="password_confirmation"
+                value={data.password_confirmation}
+                className="mt-1 block w-full"
+                handleChange={onHandleChange}
+                required
+            />
+            <InputError message={errors.password_confirmation} className="mt-2" />
+            </div>
+            <div className="flex items-center justify-end mt-4">
+            <Link
+                href={route('login')}
+                className="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
+            >
+                Already registered?
+            </Link>
+            <PrimaryButton className="ml-4" processing={processing}>
+                Register
+            </PrimaryButton>
+            </div>
             </form>
+            </div>
+            </div>
+            </div>
         </GuestLayout>
     );
 }

@@ -1,31 +1,11 @@
+import Guest from '@/Layouts/GuestLayout';
 import { Link, Head } from '@inertiajs/react';
 
 export default function Welcome(props) {
     return (
-        <>
+        <Guest props={props}>
             <Head title="Welcome" />
             <div className="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0">
-                <div className="fixed top-0 right-0 px-6 py-4 sm:block">
-                    {props.auth.user ? (
-                        <Link href={route('dashboard')} className="text-sm text-gray-700 dark:text-gray-500 underline">
-                            Dashboard
-                        </Link>
-                    ) : (
-                        <>
-                            <Link href={route('login')} className="text-sm text-gray-700 dark:text-gray-500 underline">
-                                Log in
-                            </Link>
-
-                            <Link
-                                href={route('register')}
-                                className="ml-4 text-sm text-gray-700 dark:text-gray-500 underline"
-                            >
-                                Register
-                            </Link>
-                        </>
-                    )}
-                </div>
-
                 <div className="max-w-6xl mx-auto sm:px-6 lg:px-8">
                     <div className="flex justify-center pt-8 sm:justify-start sm:pt-0">
                         <img src={"assets/logo.png"} height={120} width={120} />
@@ -33,6 +13,6 @@ export default function Welcome(props) {
                     <div className='text-center text-2xl font-bold'>NewsApp</div>
                 </div>
             </div>
-        </>
+        </Guest>
     );
 }
