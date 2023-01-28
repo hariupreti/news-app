@@ -29,12 +29,12 @@ export default function Guest({ props,children }) {
             </Popover.Button>
             </div>
             <Popover.Group as="nav" className="hidden space-x-10 md:flex">
-            <a href="#" className="text-base font-medium text-gray-500 hover:text-gray-900">
+            {/* <a href="#" className="text-base font-medium text-gray-500 hover:text-gray-900">
                 All News
             </a>
             <a href="#" className="text-base font-medium text-gray-500 hover:text-gray-900">
                 Articles
-            </a>
+            </a> */}
 
             <Popover className="relative">
                 {({ open }) => (
@@ -45,7 +45,7 @@ export default function Guest({ props,children }) {
                         'group inline-flex items-center rounded-md bg-white text-base font-medium hover:text-gray-900 focus:outline-none'
                     )}
                     >
-                    <span>Category</span>
+                    <span>News Soruces</span>
                     <ChevronDownIcon
                         className={classNames(
                         open ? 'text-gray-600' : 'text-gray-400',
@@ -66,7 +66,6 @@ export default function Guest({ props,children }) {
                     >
                     <Popover.Panel className="absolute left-1/2 z-10 mt-3 w-screen max-w-md -translate-x-1/2 transform px-2 sm:px-0">
                         <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
-
                         <div className="bg-gray-50 px-1 py-1 sm:px-8 sm:py-8">
                             <div>
                             <ul role="list" className="mt-4 space-y-4">
