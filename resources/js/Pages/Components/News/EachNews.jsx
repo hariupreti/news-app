@@ -4,7 +4,7 @@ export default function EachNews() {
     return (
         <div className='grid grid-flow-col grid-cols-10 m-2 p-2 border rounded-md bg-gray-50 border-gray-100 cursor-pointer hover:bg-gray-200'>
             <div className='col-span-3'>
-                <img className='object-cover' src="https://ichef.bbci.co.uk/news/976/cpsprodpb/8657/production/_128419343_adani.jpg.webp" width={120} height={120} />
+                <img className='object-cover p-4' src="https://ichef.bbci.co.uk/news/976/cpsprodpb/8657/production/_128419343_adani.jpg.webp" width={120} height={120} />
             </div>
             <div className='col-span-7 grid grid-flow-row'>
                 <div>
