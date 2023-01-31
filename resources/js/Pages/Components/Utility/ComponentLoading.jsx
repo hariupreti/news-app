@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function componentLoading() {
+export default function ComponentLoading() {
     return (
         <div class="border border-blue-300 shadow rounded-md p-4 max-w-sm w-full mx-auto">
             <div class="animate-pulse flex space-x-4">

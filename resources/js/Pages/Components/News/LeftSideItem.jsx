@@ -1,8 +1,9 @@
 import React from 'react'
 import EachNews from './EachNews'
 import TextInput from '@/Components/TextInput'
+import ComponentLoading from '../Utility/ComponentLoading'
 
-export default function LeftSideItem() {
+export default function LeftSideItem({headlines}) {
     return (
             <><div className='min-w-100px'>
                 <div className='p-4 text-xs text-gray-400'>Top articles for you
@@ -14,14 +15,13 @@ export default function LeftSideItem() {
             <h1 className='m-2 p-2 font-semibold shadow-sm'>Top headlines</h1>
             <div className='grid grid-flow-row'>
                 <div>
-                    <EachNews></EachNews>
-                    <EachNews></EachNews>
-                    <EachNews></EachNews>
-                    <EachNews></EachNews>
-                    <EachNews></EachNews>
-                    <EachNews></EachNews>
-                    <EachNews></EachNews>
-                    <EachNews></EachNews>
+                    {
+                        headlines ?
+                        headlines.map((eachHeadline,index) =>  {
+                            return <EachNews key={index} news={eachHeadline}></EachNews>
+                        })
+                        :<> <ComponentLoading></ComponentLoading> </>
+                    }
                 </div>
             </div>
             </>

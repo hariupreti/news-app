@@ -3,7 +3,7 @@ import { Link } from "@inertiajs/react";
 export default function ApplicationLogo({ className }) {
     return (
         <div className="flex justify-start lg:w-0 lg:flex-1">
-        <Link href={route('homepage')}>
+        <Link href={route('Homepage')}>
             <span className="sr-only">NewsApp</span>
             <img
             className="h-8 w-auto sm:h-10"
