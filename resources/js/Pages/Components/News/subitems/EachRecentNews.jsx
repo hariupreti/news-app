@@ -1,7 +1,7 @@
 import React from 'react'
 
 export default function EachRecentNews() {
-    const listStyle = "w-full bg-gray-200 cursor-pointer hover:text-blue-600 float-left text-xs border border-b-gray-300 p-4";
+    const listStyle = "w-full bg-gray-100 cursor-pointer hover:text-blue-600 float-left text-xs border border-b-gray-300 p-4";
     return (
         <li className={listStyle}>
             <span className='font-semibold text-sm'>Trump's 2024 campaign has a different look, for now</span>
