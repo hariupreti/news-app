@@ -25,13 +25,22 @@ NewsApp is built on the Laravel Framework, as we all know. One of its significa
  Once the docker process completed there are still few steps remaining to do:
 
  ```php
+    //Install required dependencies
+    docker run --rm -u "$(id -u):$(id -g)" -v $(pwd):/opt -w /opt
+     laravelsail
+     php81-composer:latest
+     composer install --ignore-platform-reqs
+     php artisan sail:install;
+
     //Enter on running dokcer newsapp server using below command
     docker exec -it news-app-laravel.test-1 /bin/bash
+
     //Generate an application key
     php artisan key:generate
 
     //Create storage simlink
     php artisan storage:link
+
  ```
 
  Note: If you face any kind of directory permission issue inside storage folder, Please provide respective permission.
