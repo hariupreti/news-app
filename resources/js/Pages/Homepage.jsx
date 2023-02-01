@@ -15,6 +15,10 @@ export default function Homepage(props) {
         <Guest props={props}>
             <Head title="Welcome" />
             <div className="overflow-x-hidden items-top justify-center bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0">
+                { props.error && <div className='p-4 bg-red-300 '>
+                <div>There is an issue occured while fetching news:</div>
+                <span className='text-xs indent-20'>{props.error}</span>
+                </div> }
                 <div className='max-w-full p-2 m-2 grid lg:grid-flow-col lg:grid-cols-12'>
                     <div className='bg-white lg:col-span-3 md:col-span-6 min-h-screen rounded-lg shadow-lg'>
                     <LeftSideItem headlines={props.topHeadlines.articles}></LeftSideItem>

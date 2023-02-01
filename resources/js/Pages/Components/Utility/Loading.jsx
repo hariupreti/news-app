@@ -6,14 +6,14 @@ export default function Loading() {
         <div className="w-full pt-8 sm:justify-start sm:pt-0">
         <div className='grid place-content-center mb-4'><img src={"assets/logo.png"} height={50} width={50} className="animate-pulse delay-1000 duration-1000" /></div>
         </div>
-        <div class="space-y-6 py-1">
-        <div class="h-10 bg-slate-200 rounded"></div>
-        <div class="space-y-3">
-        <div class="grid grid-cols-3 gap-4">
-        <div class="h-12 bg-slate-200 rounded col-span-2"></div>
-        <div class="h-8 bg-slate-200 rounded col-span-1"></div>
+        <div className="space-y-6 py-1">
+        <div className="h-10 bg-slate-200 rounded"></div>
+        <div className="space-y-3">
+        <div className="grid grid-cols-3 gap-4">
+        <div className="h-12 bg-slate-200 rounded col-span-2"></div>
+        <div className="h-8 bg-slate-200 rounded col-span-1"></div>
         </div>
-        <div class="h-20 bg-slate-200 rounded"></div>
+        <div className="h-20 bg-slate-200 rounded"></div>
         </div>
         </div>
         </div>
