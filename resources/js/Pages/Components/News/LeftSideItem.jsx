@@ -8,8 +8,10 @@ import Select from 'react-select'
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import { useForm } from '@inertiajs/react';
+import axios from 'axios';
 
 export default function LeftSideItem({headlines}) {
+    const [errorMsg,setErrorMsg] = useState("");
     const { data, setData, post, processing, errors, reset } = useForm({
         article: "",
         publishDate: new Date(),
@@ -31,11 +33,20 @@ export default function LeftSideItem({headlines}) {
 
     const submit = async (e) => {
         e.preventDefault();
-        post(route('ArticlesSearch'),{
-            onSuccess: (data) => {
-                console.log(data);
-            }
+        setErrorMsg();
+        axios.post(route('ArticlesSearch'),data).then( response => {
+            
+        }).catch( errorResponse => {
+            setErrorMsg(errorResponse.response.data.message);
         });
+        // post(route('ArticlesSearch'),{
+        //     onSuccess: (data) => {
+        //         alert("Succesws");
+        //     },
+        //     onFinish: data => {
+        //         alert("Hello world");
+        //     }
+        // });
         // let response = await axios.post(route('personalAccessToken',data));
         // if(response.status == 201){
         //     reset('token_name');
@@ -67,23 +78,21 @@ export default function LeftSideItem({headlines}) {
                     <div className='p-1 mt-4'>
                         <TextInput handleChange={(e) => onHandleChange(e)} name="article" placeholder="Search articles" className={`${(data.article && data.article.length > 2)?"rounded-b-none":""} w-full text-gray-800 outline-none border-none active:outline-none bg-gray-100 focus:ring-0 focus:outline-none max-h-10 border-gray-100`}></TextInput>
                         <div className={`bg-gray-100 border-gray-200 border border-t-0 p-4 rounded-b-md ${(data.article && data.article.length > 2)?"block":"hidden"}`}>
+                        { errorMsg != "" && <span className='text-sm text-red-600 transition-all delay-100'>{errorMsg}</span>}
                         <div className='grid grid-flow-col grid-cols-2 mt-2'>
                             <div>
                                 <InputLabel className={"text-xs m-1 text-gray-400"}>Published Date</InputLabel>
                                 <DatePicker className='rounded-md h-9 w-[94%] outline-none ring-0 focus:outline-none focus:ring-0' selected={data.publishDate} onChange={(date) => setData('publishDate',date)} />
-                                { errors.publishDate && <span className='text-sm text-red-600 transition-all delay-100'>{errors.publishDate}</span>}
                             </div>
                             <div>
                                 <InputLabel className={"text-xs m-1 text-gray-400"}>News Category</InputLabel>
                                 <Select options={category} onChange={ (e) => onCategoryChange(e) } />
-                                { errors.category && <span className='text-sm text-red-600 transition-all delay-100'>{errors.category}</span>}
                             </div>
                         </div>
                         <div className='grid grid-flow-col grid-cols-2 mt-2'>
                             <div>
                                 <InputLabel className={"text-xs m-1 text-gray-400"}>News Sources</InputLabel>
                                 <Select options={sources} onChange={ (e) => onSourceChange(e) } />
-                                { errors.source && <span className='text-sm text-red-600 transition-all delay-100'>{errors.source}</span>}
                             </div>
                             <div className='mx-auto my-auto mt-6'>
                                 <PrimaryButton onClick={(e) => submit(e) }>Filter Articles</PrimaryButton>

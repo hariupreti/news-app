@@ -11,7 +11,7 @@ export default function EachNews({news}) {
                 <div>
                 <h1 className='text-md font-semibold text-sm'>{ news && news['title'] ? news['title']:""}</h1>
                 <span className='text-sm text-ellipsis ' dangerouslySetInnerHTML={{ __html: rawHtml }}></span>
-                <div className='grid grid-flow-col grid-cols-2'>
+                <div className='grid grid-flow-col grid-cols-2 text-ellipsis overflow-hidden'>
                     <div className='text-sm font-serif mt-1 text-gray-500'> { news && news['author'] ? news['author']:""} </div>
                     <div className=' place-content-end text-end'>
                         <div className='text-xs mt-1 text-gray-400 float-right'>{ news && news['publishedAt'] ? news['publishedAt']:""}</div>
@@ -19,7 +19,6 @@ export default function EachNews({news}) {
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 mt-1 text-gray-500">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg></div>
-                        
                     </div>
                 </div>
                 </div>

@@ -12,7 +12,7 @@ class NewsController extends Controller
     public function searchArticles(SearchArticlesRequest $request){
         return Http::accept('application/json')
             ->withHeaders(['Authorization' => "Bearer ".env('NEWSORGAPIKEY')])
-            ->get('https://newsapi.org/v2/top-headlines?country=us&pageSize=10')
+            ->get('https://newsapi.org/v2/top-headlines?country=us&pageSize=20')
             ->throw(function ($response, $e) {
             })->json();
     }
@@ -35,7 +35,7 @@ class NewsController extends Controller
     public function getBreakingNews(){
         return Http::accept('application/json')
             ->withHeaders(['Authorization' => "Bearer ".env('NEWSORGAPIKEY')])
-            ->get('https://newsapi.org/v2/everything?q=breaking&pageSize=14')
+            ->get('https://newsapi.org/v2/everything?q=breaking&pageSize=24')
             ->throw(function ($response, $e) {
             })->json();
     }
