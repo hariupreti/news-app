@@ -12,6 +12,8 @@ import axios from 'axios';
 
 export default function LeftSideItem({headlines}) {
     const [errorMsg,setErrorMsg] = useState("");
+    const [searchArticles,setSearchArticles] = useState([]);
+    const [isLoading,setIsLoading] = useState({loading:false});
     const { data, setData, post, processing, errors, reset } = useForm({
         article: "",
         publishDate: new Date(),
@@ -23,11 +25,20 @@ export default function LeftSideItem({headlines}) {
 
     const submit = async (e) => {
         e.preventDefault();
+        setIsLoading({loading:true});
         setErrorMsg();
         axios.post(route('ArticlesSearch'),data).then( response => {
+            if(response.data.articles && response.data.articles.length > 0){
+                setSearchArticles(response.data.articles);
+            }else{
+                setErrorMsg("No any articles found in your search criteria.");
+            }
         }).catch( errorResponse => {
             setErrorMsg(errorResponse.response.data.message);
         });
+        setTimeout(() => {
+            setIsLoading({loading:false});
+        }, 3000);
     };
 
     return (
@@ -39,19 +50,55 @@ export default function LeftSideItem({headlines}) {
                         { errorMsg != "" && <span className='text-sm text-red-600 transition-all delay-100'>{errorMsg}</span>}
                         <div className='grid grid-flow-col grid-cols-2 mt-2'>
                             <div>
-                                <InputLabel className={"text-xs m-1 text-gray-400"}>Published Date</InputLabel>
+                                <InputLabel className={"text-xs m-1 text-gray-400"}>Date From</InputLabel>
                                 <DatePicker className='rounded-md h-9 w-[94%] outline-none ring-0 focus:outline-none focus:ring-0' selected={data.publishDate} onChange={(date) => setData('publishDate',date)} />
                             </div>
                             <div className='mx-auto my-auto mt-6'>
-                                <PrimaryButton onClick={(e) => submit(e) }>Filter Articles</PrimaryButton>
+                                {
+                                    isLoading.loading ?
+                                    <PrimaryButton className='normal-case ring-0 focus:none outline-none border-none' processing={true}>Searching...</PrimaryButton>
+                                    :
+                                    <PrimaryButton className='normal-case ring-0 focus:none outline-none border-none' onClick={(e) => submit(e) }>Filter Articles</PrimaryButton>
+                                }
                             </div>
                         </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <h1 className='m-2 p-2 font-semibold shadow-sm'>Top headlines</h1>
+            {
+                (searchArticles && searchArticles.length > 0) ?
+                <div className='grid grid-flow-col grid-cols-6 font-semibold shadow-sm m-1 p-1 bg-slate-50'>
+                <div className='col-span-5'><h1 className='mt-2'>Search Results</h1></div>
+                <div><span className='bg-slate-100 cursor-pointer hover:bg-slate-200 p-2 rounded-md float-right' onClick={ () => setSearchArticles([]) }>X</span></div>
+                </div>
+                :
+                <h1 className='m-2 p-2 font-semibold shadow-sm'>Top headlines</h1>
+            }
             <div className='grid grid-flow-row'>
+            {
+                (searchArticles && searchArticles.length > 0) ?
+                <div>
+                {
+                    searchArticles ?
+                    searchArticles.map((eachHeadline,index) =>  {
+                        return <EachNews key={index} news={eachHeadline}></EachNews>
+                    })
+                    :<><div className='grid grid-flow-row gap-3 mb-20'>  <ComponentLoading></ComponentLoading> <ComponentLoading></ComponentLoading> <ComponentLoading></ComponentLoading> <ComponentLoading></ComponentLoading> <ComponentLoading></ComponentLoading> </div></>
+                }
+                </div>
+                :
+                <div>
+                    {
+                        headlines ?
+                        headlines.map((eachHeadline,index) =>  {
+                            return <EachNews key={index} news={eachHeadline}></EachNews>
+                        })
+                        :<><div className='grid grid-flow-row gap-3 mb-20'>  <ComponentLoading></ComponentLoading> <ComponentLoading></ComponentLoading> <ComponentLoading></ComponentLoading> <ComponentLoading></ComponentLoading> <ComponentLoading></ComponentLoading> </div></>
+                    }
+                </div>
+            }
+
                 <div>
                     {
                         headlines ?

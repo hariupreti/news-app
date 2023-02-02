@@ -17,6 +17,7 @@ class NewsController extends Controller
         $news = [];
         $newsContract = $this->preferenceBasedNews();
         $news = $newsContract->getHomePageNews();
+        // dd($news);
         return Inertia::render('Homepage',['topHeadlines'=>$news["news"]["headlines"],'source'=> $news["contract"]->source[0]]);
     }
 
@@ -36,7 +37,7 @@ class NewsController extends Controller
         $news = [];
         $newsContract = $this->preferenceBasedNews();
         $news = $newsContract->getBreakingNews();
-        return response()->json($news["news"]["breakingNews"]);
+        return response()->json($news["news"]);
     }
 
     private function preferenceBasedNews(){
@@ -48,7 +49,7 @@ class NewsController extends Controller
                     $contract = new NewsDetails(new  NewsAPIGateway(["newsapi",env('NEWSAPIKEY'),"https://newsapi.org/v2"]));
                 break;
                 case 'TheGuardian':
-                    $contract = new NewsDetails(new TheGuardianGateway(["TheGuardian","d7d9da80-57ff-4cce-bcdf-690d3b30e470","https://content.guardianapis.com"]));
+                    $contract = new NewsDetails(new TheGuardianGateway(["TheGuardian",env('THEGUARDIAN_API_KEY'),"https://content.guardianapis.com"]));
                 break;
                 case 'newscred':
                     $contract = new NewsDetails(new NewsCredGateway(["newscred","a32a0f9815cb4735898be8190612291e","https://nesd"]));

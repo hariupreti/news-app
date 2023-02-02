@@ -1,5 +1,8 @@
 <?php
 namespace App\News\Details;
+
+use App\Http\Resources\News\NewsAPI\HomePageNewsResources;
+use App\Http\Resources\News\TheGuardian\HomePageNewsResources as TheGuardianHomePageNewsResources;
 use App\News\Contracts\NewsContract;
 use Illuminate\Support\Facades\Http;
 
@@ -57,7 +60,7 @@ class NewsDetails
             case 'TheGuardian':
                 return [
                     "contract" => $this->newsContract,
-                    "news" => ["headlines" => $this->getTopHeadlinesForTheGuardian()]
+                    "news" => ["breakingNews" => $this->getBreakingNewsForTheGarudian()]
                 ];
                 break;
             case 'newscred':
@@ -107,23 +110,28 @@ class NewsDetails
         $urlForHeadlines = (string) $this->newsContract->source[2];
         $apikey = (string) $this->newsContract->source[1];
         $headlinesFullURL = "$urlForHeadlines/top-headlines?country=us&pageSize=20";
-        return Http::accept('application/json')
+        $response = Http::accept('application/json')
             ->withHeaders(['Authorization' => "Bearer $apikey"])
             ->get($headlinesFullURL)
             ->throw(function ($response, $e) {
                 dd($e->getMessage());
-            })->json();
+        });
+        $topheadlines = json_decode($response->body());
+        return HomePageNewsResources::collection($topheadlines->articles);
     }
 
     private function getBreakingNewsForNewsAPI(){
         $urlForHeadlines = (string) $this->newsContract->source[2];
         $apikey = (string) $this->newsContract->source[1];
         $breakingNewsURL = "$urlForHeadlines/everything?q=breaking&pageSize=24";
-        return Http::accept('application/json')
-        ->withHeaders(['Authorization' => "Bearer $apikey"])
-        ->get($breakingNewsURL)
-        ->throw(function ($response, $e) {
-        })->json();
+        $response = Http::accept('application/json')
+            ->withHeaders(['Authorization' => "Bearer $apikey"])
+            ->get($breakingNewsURL)
+            ->throw(function ($response, $e) {
+                dd($e->getMessage());
+        });
+        $news = json_decode($response->body());
+        return HomePageNewsResources::collection($news->articles);
     }
 
     private function searchArticlesForNewsAPI($keyword,$date){
@@ -146,12 +154,22 @@ class NewsDetails
             ->throw(function ($response, $e) {
                 dd($e->getMessage());
             });
-        $newsonly = $response->body();
-        $decodeNews = json_decode($newsonly);
-        $topHeadlines = [
-            "news" => $decodeNews->response->results
-        ];
-        return $topHeadlines;
+
+        $decodedNews = json_decode($response->body());
+        return TheGuardianHomePageNewsResources::collection($decodedNews->response->results);
+    }
+
+    private function getBreakingNewsForTheGarudian(){
+        $urlForHeadlines = (string) $this->newsContract->source[2];
+        $apikey = (string) $this->newsContract->source[1];
+        $headlinesFullURL = "$urlForHeadlines/search?q=breaking news&api-key=$apikey";
+        $response = Http::accept('application/json')
+            ->get($headlinesFullURL)
+            ->throw(function ($response, $e) {
+                dd($e->getMessage());
+            });
+        $decodedNews = json_decode($response->body());
+        return TheGuardianHomePageNewsResources::collection($decodedNews->response->results);
     }
     
 }

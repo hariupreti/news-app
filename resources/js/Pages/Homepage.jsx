@@ -39,7 +39,7 @@ export default function Homepage(props) {
                 }
                 <div className='max-w-full p-2 m-2 grid lg:grid-flow-col lg:grid-cols-12 min-h-min'>
                     <div className='bg-white lg:col-span-3 md:col-span-6 rounded-lg shadow-lg'>
-                    <LeftSideItem headlines={props.topHeadlines.articles}></LeftSideItem>
+                    <LeftSideItem headlines={props.topHeadlines.data}></LeftSideItem>
                     </div>
                     <div className='lg:col-span-7 md:row-span-6 m-4 sm:float-left'>
                         <CenterNews></CenterNews>

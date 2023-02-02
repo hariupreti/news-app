@@ -8,7 +8,7 @@ export default function CenterNews() {
 
     const getBreakingNews = () => {
         axios.get(route('BreakingNews')).then( response => {
-            setBreakingNews(response.data.articles);
+            setBreakingNews(response.data.breakingNews);
         });
     }
 
