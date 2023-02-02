@@ -1,6 +1,7 @@
 import InputLabel from '@/Components/InputLabel';
 import Guest from '@/Layouts/GuestLayout';
 import { Link, Head } from '@inertiajs/react';
+import { useEffect, useState } from 'react';
 import Footer from './Components/Footer';
 import CenterNews from './Components/News/CenterNews';
 import EachNews from './Components/News/EachNews';
@@ -11,6 +12,17 @@ import RightSideItem from './Components/News/RightSideItem';
 import Loading from './Components/Utility/Loading';
 
 export default function Homepage(props) {
+    const [showMessage,setShowMessage] = useState({showmessage:props.message != null ? true : false});
+    console.log(showMessage);
+    useEffect(()=> {
+        if(showMessage.showmessage){
+            setTimeout(() => {
+                let newChage = {showmessage:!showMessage};
+                setShowMessage(newChage);
+            },3000);
+        }
+    });
+
     return (
         <Guest props={props}>
             <Head title="Welcome" />
@@ -19,6 +31,13 @@ export default function Homepage(props) {
                 <div>There is an issue occured while fetching news:</div>
                 <span className='text-xs indent-20'>{props.error}</span>
                 </div> }
+                {
+                <div className={`${showMessage.showmessage?"block":"hidden"}`}>
+                <div className={`p-4 bg-green-300 mx-auto `}>
+                <div className='font-semibold'>{props.message}</div>
+                </div>
+                </div>
+                }
                 <div className='max-w-full p-2 m-2 grid lg:grid-flow-col lg:grid-cols-12 min-h-min'>
                     <div className='bg-white lg:col-span-3 md:col-span-6 rounded-lg shadow-lg'>
                     <LeftSideItem headlines={props.topHeadlines.articles}></LeftSideItem>

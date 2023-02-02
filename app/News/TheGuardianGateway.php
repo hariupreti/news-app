@@ -2,7 +2,7 @@
 namespace App\News;
 use App\News\Contracts\NewsContract;
 
-class OpenNewsGateway implements NewsContract
+class TheGuardianGateway implements NewsContract
 {
     public $source;
 

@@ -17,35 +17,58 @@ class NewsDetails
         switch ($this->newsContract->source[0]) {
             case 'newsapi':
                 return [
-                    "news" => "User wants to view news from newsapp source",
+                    "description" => "User wants to view news from newsapi source",
                     "contract" => $this->newsContract,
                     "news" => ["headlines" => $this->getTopHeadlinesForNewsAPI()]
                 ];
                 break;
-
-            case 'sdew':
+            case 'TheGuardian':
                 return [
-                    "news" => "Default",
-                    "contract" => $this->newsContract
+                    "description" => "User wants to view news from opennews source",
+                    "contract" => $this->newsContract,
+                    "news" => ["headlines" => $this->getTopHeadlinesForTheGuardian()]
                 ];
                 break;
-                //Starting Brining news for newsapi client
-
+            case 'newscred':
+                return [
+                    "description" => "User wants to view news from newscred source",
+                    "contract" => $this->newsContract,
+                    "news" => ["headlines" => $this->getTopHeadlinesForNewsAPI()]
+                ];
+                break;
             default:
-            return [
-                "description" => "Get default news source from newsapi",
-                "contract" => $this->newsContract,
-                "news" => ["headlines" => $this->getTopHeadlinesForNewsAPI()],
-            ];
+                return [
+                    "description" => "Get default news source from newsapi",
+                    "contract" => $this->newsContract,
+                    "news" => ["headlines" => $this->getTopHeadlinesForNewsAPI()],
+                ];
         }
     }
 
     private function getTopHeadlinesForNewsAPI(){
+        $urlForHeadlines = (string) $this->newsContract->source[2];
+        $headlinesFullURL = "$urlForHeadlines/top-headlines?country=us&pageSize=20";
         return Http::accept('application/json')
             ->withHeaders(['Authorization' => "Bearer ".env('NEWSORGAPIKEY')])
-            ->get('https://newsapi.org/v2/top-headlines?country=us&pageSize=20')
+            ->get($headlinesFullURL)
             ->throw(function ($response, $e) {
             })->json();
+    }
+
+    private function getTopHeadlinesForTheGuardian(){
+        $urlForHeadlines = (string) $this->newsContract->source[2];
+        $apikey = (string) $this->newsContract->source[1];
+        $headlinesFullURL = "$urlForHeadlines/search?page=1&q=debate&api-key=$apikey";
+        $response = Http::accept('application/json')
+            ->get($headlinesFullURL)
+            ->throw(function ($response, $e) {
+            });
+        $newsonly = $response->body();
+        $decodeNews = json_decode($newsonly);
+        $topHeadlines = [
+            "news" => $decodeNews->response->results
+        ];
+        return $topHeadlines;
     }
     
 }
