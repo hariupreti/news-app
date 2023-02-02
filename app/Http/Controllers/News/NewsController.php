@@ -10,9 +10,13 @@ use App\Http\Requests\News\SearchArticlesRequest;
 class NewsController extends Controller
 {
     public function searchArticles(SearchArticlesRequest $request){
+        $keyword = $request->article ? $request->article : "";
+        $date = $request->publishDate ? $request->publishDate : "";
+        // $source = $request->source ? $request->source : "";
+        // $category = $request->category ? $request->category : "";
         return Http::accept('application/json')
             ->withHeaders(['Authorization' => "Bearer ".env('NEWSORGAPIKEY')])
-            ->get('https://newsapi.org/v2/top-headlines?country=us&pageSize=20')
+            ->get("https://newsapi.org/v2/everything?q=$keyword&from=$date")
             ->throw(function ($response, $e) {
             })->json();
     }
