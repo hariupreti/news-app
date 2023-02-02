@@ -26,8 +26,6 @@ class SearchArticlesRequest extends FormRequest
         return [
             'article' => 'required|min:4|max:20',
             'publishDate' => 'required|date|before_or_equal:'.now(),
-            'source' => 'required',
-            'category' => 'required',
         ];
     }
 }

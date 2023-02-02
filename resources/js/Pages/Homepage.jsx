@@ -13,7 +13,6 @@ import Loading from './Components/Utility/Loading';
 
 export default function Homepage(props) {
     const [showMessage,setShowMessage] = useState({showmessage:props.message != null ? true : false});
-    console.log(showMessage);
     useEffect(()=> {
         if(showMessage.showmessage){
             setTimeout(() => {

@@ -5,7 +5,7 @@ namespace App\Providers;
 use App\News\Contracts\NewsContract;
 use App\News\NewsApiGateway;
 use App\News\Details\NewsDetails;
-use App\News\OpenNewsGateway;
+use App\News\TheGuardianGateway;
 use Illuminate\Support\ServiceProvider;
 
 class NewsServiceProvider extends ServiceProvider
@@ -20,9 +20,9 @@ class NewsServiceProvider extends ServiceProvider
         $this->app->singleton(NewsContract::class, function ($app) {
             // return new Connection(config('riak'));
             if(request()->has('source')){
-                return new NewsApiGateway("NewsAPIgateway");
+                return new NewsApiGateway(["newsapi",env('NEWSAPIKEY'),"https://newsapi.org/v2"]);
             }else{
-                return new OpenNewsGateway("OpenNewsGateway");
+                return new NewsApiGateway(["newsapi",env('NEWSAPIKEY'),"https://newsapi.org/v2"]);
             }
         });
 
