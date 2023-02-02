@@ -85,7 +85,7 @@ export default function Authenticated({ auth, header, children }) {
 
                 <div className={(showingNavigationDropdown ? 'block' : 'hidden') + ' sm:hidden'}>
                     <div className="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
+                        <ResponsiveNavLink href={route('settings.index')} active={route().current('settings.index')}>
                             Dashboard
                         </ResponsiveNavLink>
                     </div>
@@ -112,11 +112,6 @@ export default function Authenticated({ auth, header, children }) {
                 <header className="bg-white dark:bg-gray-800 shadow">
                     <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 grid grid-flow-col grid-cols-7">
                         <div className='col-span-2'>{header}</div>
-                        <div>
-                            <ul>
-                                <li className='p-2'><Link>Preference</Link></li>
-                            </ul>
-                        </div>
                     </div>
                 </header>
             )}

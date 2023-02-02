@@ -195,6 +195,9 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        // Custom provider for news 
+        App\Providers\NewsServiceProvider::class,
+
     ],
 
     /*
