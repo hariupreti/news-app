@@ -5,7 +5,6 @@ namespace App\Providers;
 use App\News\Contracts\NewsContract;
 use App\News\NewsApiGateway;
 use App\News\Details\NewsDetails;
-use App\News\OpenNewsGateway;
 use Illuminate\Support\ServiceProvider;
 
 class NewsServiceProvider extends ServiceProvider
@@ -18,11 +17,10 @@ class NewsServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton(NewsContract::class, function ($app) {
-            // return new Connection(config('riak'));
             if(request()->has('source')){
                 return new NewsApiGateway("NewsAPIgateway");
             }else{
-                return new OpenNewsGateway("OpenNewsGateway");
+                return new NewsApiGateway("OpenNewsGateway");
             }
         });
 
