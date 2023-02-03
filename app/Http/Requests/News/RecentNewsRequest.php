@@ -4,7 +4,7 @@ namespace App\Http\Requests\News;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SearchArticlesRequest extends FormRequest
+class RecentNewsRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,7 @@ class SearchArticlesRequest extends FormRequest
     public function rules()
     {
         return [
-            'article' => 'required|min:4|max:20',
-            'publishDate' => 'required|date|before_or_equal:'.now(),
+            'interest' => 'sometimes',
         ];
     }
 }

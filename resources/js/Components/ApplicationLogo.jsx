@@ -1,6 +1,6 @@
 import { Link } from "@inertiajs/react";
 
-export default function ApplicationLogo({ className }) {
+export default function ApplicationLogo({ className,newsSource }) {
     return (
         <div className="flex justify-start lg:w-0 lg:flex-1">
         <Link href={route('Homepage')}>
@@ -10,7 +10,10 @@ export default function ApplicationLogo({ className }) {
             src="assets/logo.png"
             alt="NewsApp"
             />
-            <div className='-mt-9 ml-12 text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-800 to-pink-900'>NewsApp</div>
+            <div className="grid grid-flow-row grid-rows-2">
+                <div className='-mt-9 ml-12 text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-800 to-pink-900'>NewsApp</div>
+                <div className='-mt-3 ml-12 text-xs font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-green-800 to-sky-900'>{newsSource}</div>
+            </div>
         </Link>
         </div>
     );

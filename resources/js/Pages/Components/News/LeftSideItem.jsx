@@ -10,32 +10,23 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import { useForm } from '@inertiajs/react';
 import axios from 'axios';
 
-export default function LeftSideItem({headlines}) {
+export default function LeftSideItem({headlines,toggle=()=> null }) {
     const [errorMsg,setErrorMsg] = useState("");
     const [searchArticles,setSearchArticles] = useState([]);
     const [isLoading,setIsLoading] = useState({loading:false});
     const { data, setData, post, processing, errors, reset } = useForm({
         article: "",
         publishDate: new Date(),
-        // source: "",
-        // category: "",
     });
 
     const onHandleChange = (event) => {
         setData(event.target.name,event.target.value);
     };
 
-    const onCategoryChange = (event) => {
-        setData('category',event.value);
-    };
-
-    const onSourceChange = (event) => {
-        setData('source',event.value);
-    };
-
     const submit = async (e) => {
         setIsLoading({loading:true});
         e.preventDefault();
+        setIsLoading({loading:true});
         setErrorMsg();
         axios.post(route('ArticlesSearch'),data).then( response => {
             if(response.data.articles && response.data.articles.length > 0){
@@ -46,20 +37,10 @@ export default function LeftSideItem({headlines}) {
         }).catch( errorResponse => {
             setErrorMsg(errorResponse.response.data.message);
         });
-        setIsLoading({loading:false});
+        setTimeout(() => {
+            setIsLoading({loading:false});
+        }, 3000);
     };
-
-    const category = [
-        { value: 'chocolate', label: 'Chocolate' },
-        { value: 'strawberry', label: 'Strawberry' },
-        { value: 'vanilla', label: 'Vanilla' }
-    ]
-
-    const sources = [
-        { value: 'chocolate', label: 'Chocolate' },
-        { value: 'strawberry', label: 'Strawberry' },
-        { value: 'vanilla', label: 'Vanilla' }
-    ]
 
     return (
             <><div className='min-w-100px'>
@@ -74,22 +55,14 @@ export default function LeftSideItem({headlines}) {
                                 <DatePicker className='rounded-md h-9 w-[94%] outline-none ring-0 focus:outline-none focus:ring-0' selected={data.publishDate} onChange={(date) => setData('publishDate',date)} />
                             </div>
                             <div className='mx-auto my-auto mt-6'>
-                                <PrimaryButton className='normal-case ring-0 focus:none outline-none border-none' processing={isLoading.loading} onClick={(e) => submit(e) }>Filter Articles</PrimaryButton>
+                                {
+                                    isLoading.loading ?
+                                    <PrimaryButton className='normal-case ring-0 focus:none outline-none border-none' processing={true}>Searching...</PrimaryButton>
+                                    :
+                                    <PrimaryButton className='normal-case ring-0 focus:none outline-none border-none' onClick={(e) => submit(e) }>Filter Articles</PrimaryButton>
+                                }
                             </div>
-                            {/* <div>
-                                <InputLabel className={"text-xs m-1 text-gray-400"}>News Category</InputLabel>
-                                <Select options={category} onChange={ (e) => onCategoryChange(e) } />
-                            </div> */}
                         </div>
-                        {/* <div className='grid grid-flow-col grid-cols-2 mt-2'>
-                            <div>
-                                <InputLabel className={"text-xs m-1 text-gray-400"}>News Sources</InputLabel>
-                                <Select options={sources} onChange={ (e) => onSourceChange(e) } />
-                            </div>
-                            <div className='mx-auto my-auto mt-6'>
-                                <PrimaryButton processing={isLoading} onClick={(e) => submit(e) }>Filter Articles</PrimaryButton>
-                            </div>
-                        </div> */}
                         </div>
                     </div>
                 </div>
@@ -110,7 +83,7 @@ export default function LeftSideItem({headlines}) {
                 {
                     searchArticles ?
                     searchArticles.map((eachHeadline,index) =>  {
-                        return <EachNews key={index} news={eachHeadline}></EachNews>
+                        return <EachNews selectNews={(news) => toggle(news)}  key={index} news={eachHeadline}></EachNews>
                     })
                     :<><div className='grid grid-flow-row gap-3 mb-20'>  <ComponentLoading></ComponentLoading> <ComponentLoading></ComponentLoading> <ComponentLoading></ComponentLoading> <ComponentLoading></ComponentLoading> <ComponentLoading></ComponentLoading> </div></>
                 }
@@ -120,7 +93,7 @@ export default function LeftSideItem({headlines}) {
                     {
                         headlines ?
                         headlines.map((eachHeadline,index) =>  {
-                            return <EachNews key={index} news={eachHeadline}></EachNews>
+                            return <EachNews selectNews={(news) => toggle(news)}  key={index} news={eachHeadline}></EachNews>
                         })
                         :<><div className='grid grid-flow-row gap-3 mb-20'>  <ComponentLoading></ComponentLoading> <ComponentLoading></ComponentLoading> <ComponentLoading></ComponentLoading> <ComponentLoading></ComponentLoading> <ComponentLoading></ComponentLoading> </div></>
                     }
@@ -131,7 +104,7 @@ export default function LeftSideItem({headlines}) {
                     {
                         headlines ?
                         headlines.map((eachHeadline,index) =>  {
-                            return <EachNews key={index} news={eachHeadline}></EachNews>
+                            return <EachNews selectNews={(news) => toggle(news)}  key={index} news={eachHeadline}></EachNews>
                         })
                         :<><div className='grid grid-flow-row gap-3 mb-20'>  <ComponentLoading></ComponentLoading> <ComponentLoading></ComponentLoading> <ComponentLoading></ComponentLoading> <ComponentLoading></ComponentLoading> <ComponentLoading></ComponentLoading> </div></>
                     }

@@ -2,10 +2,9 @@
 namespace App\News;
 use App\News\Contracts\NewsContract;
 
-class NewsApiGateway implements NewsContract
+class NewsAPIGateway implements NewsContract
 {
     public $source;
-
 
     function __construct($source){
         $this->source = $source;

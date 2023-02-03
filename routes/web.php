@@ -28,7 +28,6 @@ use Inertia\Inertia;
 
 include_once 'modules/news.php';
 
-
 Route::middleware('auth')->group(function () {
     Route::resource('settings', UserSettingsController::class)->middleware(['auth']);
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
