@@ -18,6 +18,11 @@ export default function Homepage(props) {
         if(check){
             setShowMain({show:false});
         }
+        window.scrollTo({
+            top: 10,
+            left: 10,
+            behavior: 'smooth'
+        });
     }
 
     useEffect(()=> {
@@ -45,7 +50,7 @@ export default function Homepage(props) {
                 </div>
                 }
                 <div className='max-w-full p-2 m-2 grid lg:grid-flow-col lg:grid-cols-12 min-h-min'>
-                    <div className={`bg-white lg:col-span-3 md:col-span-6 rounded-lg shadow-lg ${(showMain.show)?"sm:hidden xs:hidden ":"lg:block md:block"}`} >
+                    <div className={`${(showMain.show)?"hidden":"bg-white lg:col-span-3 md:col-span-6 rounded-lg shadow-lg"}`} >
                     <LeftSideItem headlines={props.topHeadlines.data} toggle={(e) => toogleMain(e)}></LeftSideItem>
                     </div>
                     {
