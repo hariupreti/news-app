@@ -17,12 +17,6 @@ NewsApp is built on the Laravel Framework, as we all know. One of its significa
  - Copy .env.example to .env
 
 ```php
-   DB_HOST=mysql //mysql for docker, Alternative: 127.0.0.1
-   DB_PORT=3306
-   DB_DATABASE="your_db_name"
-   DB_USERNAME="db_user"
-   DB_PASSWORD='password'
-
    //Make sure to update following env key on .env file
    NEWSAPIKEY="NewsAPI_API_key" //https://newsapi.org
    THEGUARDIAN_API_KEY="The_Guardian_news_API_key" //https://open-platform.theguardian.com/
@@ -31,14 +25,14 @@ NewsApp is built on the Laravel Framework, as we all know. One of its significa
 
 Run docker command below:
 ```php
-   docker-compose build //to build NewsApp's docker image on local machine
-
-   //Install required dependencies
+   //Install required dependencies, select one database service pgsql,mysql..
    docker run --rm -u "$(id -u):$(id -g)" -v $(pwd):/opt -w /opt
    laravelsail
    php81-composer:latest
    composer install
    php artisan sail:install
+
+   docker-compose build //build newsapp image on local machine
 
    docker-compose up //run project on docker
       or
@@ -70,6 +64,8 @@ Run docker command below:
          or
     npm run dev //development mode
  ```
+### Browse NewsApp
+If you able to run project successfully, you will get NewsApp running on port 80 on [localhost](http://localhost).
 ## Security Vulnerabilities
 
 If you discover a security vulnerability within NewsApp, please send an e-mail to Hari Upreti via [hariupreti679@gmail.com](mailto:hariupreti679@gmail.com). All security vulnerabilities will be promptly addressed.
