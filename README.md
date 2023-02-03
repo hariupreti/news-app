@@ -8,31 +8,49 @@ A news portal app called NewsApp is developed using Laravel framework, using PHP
 - Article search and filtering.
 - Personalized news feed.
 - Responsive design.
+- Customizable news soruce.( Default: NewsAPI )
 
 ## Project Setup
 NewsApp is built on the Laravel Framework, as we all know. One of its significant features is containerization. NewsApp is thus dockerized to make project setup and development easier. You can setup it on your own machine by following the steps listed below.
 
- - Clone the project from main branch
+ - Clone the project from [master branch]("https://github.com/hariupreti/news-app/tree/master") 
  - Copy .env.example to .env
 
- ```php
-    docker-compose up --build //to build NewsApp's docker image on local machine
-    docker-compose up -d //run project on detached mode
-        or
-    docker-compose down //stop running project
+```php
+   DB_HOST=mysql //mysql for docker, Alternative: 127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE="your_db_name"
+   DB_USERNAME="db_user"
+   DB_PASSWORD='password'
+
+   //Make sure to update following env key on .env file
+   NEWSAPIKEY="NewsAPI_API_key" //https://newsapi.org
+   THEGUARDIAN_API_KEY="The_Guardian_news_API_key" //https://open-platform.theguardian.com/
+   THENEWYORKTIME_API_KEY="The_New_York_API_key" //https://developer.nytimes.com
+```
+
+Run docker command below:
+```php
+   docker-compose build //to build NewsApp's docker image on local machine
+
+   //Install required dependencies
+   docker run --rm -u "$(id -u):$(id -g)" -v $(pwd):/opt -w /opt
+   laravelsail
+   php81-composer:latest
+   composer install
+   php artisan sail:install
+
+   docker-compose up //run project on docker
+      or
+   docker-compose up -d //run on detach mode
+      or
+   docker-compose down //stop running project
  ```
 
  Once the docker process completed there are still few steps remaining to do:
 
  ```php
-    //Install required dependencies
-    docker run --rm -u "$(id -u):$(id -g)" -v $(pwd):/opt -w /opt
-     laravelsail
-     php81-composer:latest
-     composer install --ignore-platform-reqs
-     php artisan sail:install;
-
-    //Enter on running dokcer newsapp server using below command
+    //Login into app service
     docker exec -it news-app-laravel.test-1 /bin/bash
 
     //Generate an application key
@@ -41,10 +59,17 @@ NewsApp is built on the Laravel Framework, as we all know. One of its significa
     //Create storage simlink
     php artisan storage:link
 
+    //Create storage simlink
+    php artisan migrate:fresh --seed
+
+    //install npm packages
+    npm install
+
+    //build js modules
+    npm run build //production build
+         or
+    npm run dev //development mode
  ```
-
- Note: If you face any kind of directory permission issue inside storage folder, Please provide respective permission.
-
 ## Security Vulnerabilities
 
 If you discover a security vulnerability within NewsApp, please send an e-mail to Hari Upreti via [hariupreti679@gmail.com](mailto:hariupreti679@gmail.com). All security vulnerabilities will be promptly addressed.
