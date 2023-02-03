@@ -1,15 +1,20 @@
 import React from 'react'
 
-export default function EachNews({news}) {
+export default function EachNews({news,selectNews=()=>null}) {
+    
+    const viewNews = (news) => {
+        selectNews(news);
+    }
+
     const rawHtml = news && news['description'] ? news['description']:"";
     return (
-        <div>
+        <div onClick={ () => viewNews(news) }>
         { news && news['contentfromlink'] ?
             <div className='grid grid-flow-col grid-cols-10 m-2 p-2 border rounded-md bg-gray-50 border-gray-100 cursor-pointer hover:bg-gray-200'>
             <div className='col-span-10 grid grid-flow-row'>
                 <div>
                 <h1 className='text-md font-semibold text-sm'>{ news && news['title'] ? news['title']:""}</h1>
-                <iframe src={news['content']}></iframe>
+                <div className='bg-white px-10 py-14 rounded-md mx-auto text-sm m-4 text-gray-500'>Image not available or origin block to load web content</div>
                 <div className='grid grid-flow-col grid-cols-2 text-ellipsis overflow-hidden'>
                     <div className='text-sm font-serif mt-1 text-gray-500'> { news && news['author'] ? news['author']:""} </div>
                     <div className=' place-content-end text-end'>

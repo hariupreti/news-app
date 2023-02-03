@@ -1,18 +1,25 @@
-import InputLabel from '@/Components/InputLabel';
 import Guest from '@/Layouts/GuestLayout';
-import { Link, Head } from '@inertiajs/react';
+import { Head } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
 import Footer from './Components/Footer';
 import CenterNews from './Components/News/CenterNews';
-import EachNews from './Components/News/EachNews';
 import LeftSideItem from './Components/News/LeftSideItem';
 import MainNews from './Components/News/MainNews';
-import NewsOnImageBackground from './Components/News/NewsOnImageBackground';
 import RightSideItem from './Components/News/RightSideItem';
-import Loading from './Components/Utility/Loading';
 
 export default function Homepage(props) {
     const [showMessage,setShowMessage] = useState({showmessage:props.message != null ? true : false});
+    const [showMain,setShowMain] = useState({show:false});
+    const [mainNews,setMainNews] = useState([]);
+
+    const toogleMain = (news,check=false) => {
+        setMainNews(news);
+        setShowMain({show:true});
+        if(check){
+            setShowMain({show:false});
+        }
+    }
+
     useEffect(()=> {
         if(showMessage.showmessage){
             setTimeout(() => {
@@ -38,14 +45,21 @@ export default function Homepage(props) {
                 </div>
                 }
                 <div className='max-w-full p-2 m-2 grid lg:grid-flow-col lg:grid-cols-12 min-h-min'>
-                    <div className='bg-white lg:col-span-3 md:col-span-6 rounded-lg shadow-lg'>
-                    <LeftSideItem headlines={props.topHeadlines.data}></LeftSideItem>
+                    <div className={`bg-white lg:col-span-3 md:col-span-6 rounded-lg shadow-lg ${(showMain.show)?"sm:hidden xs:hidden ":"lg:block md:block"}`} >
+                    <LeftSideItem headlines={props.topHeadlines.data} toggle={(e) => toogleMain(e)}></LeftSideItem>
                     </div>
+                    {
+                    showMain.show ?
+                    <div className={`${(showMain.show)?"lg:col-span-10 md:row-span-6 m-4 sm:float-left ":"lg:col-span-9 md:row-span-6 m-4 sm:float-left"}`}>
+                        <MainNews toggle={(news) => toogleMain(news,true)} mainNews={mainNews}></MainNews>
+                    </div>
+                    :
                     <div className='lg:col-span-7 md:row-span-6 m-4 sm:float-left'>
-                        <CenterNews></CenterNews>
+                        <CenterNews toggle={(news) => toogleMain(news)}></CenterNews>
                     </div>
+                    }
                     <div className='lg:col-span-2 md:row-span-6 border-0 border-l border-dashed border-gray-300 mt-10 shadow-sm'>
-                    <RightSideItem></RightSideItem>
+                        <RightSideItem userInterests={props.interests}  toggle={(e) => toogleMain(e)}></RightSideItem>
                     </div>
                 </div>
                 <Footer></Footer>

@@ -10,7 +10,7 @@ export default function Settings(props) {
     const category = [
         { value: 'newsapi', label: 'NewsAPI - Default' },
         { value: 'TheGuardian', label: 'The-Guardian News API' },
-        { value: 'newscred', label: 'NewsCred' }
+        { value: 'NewYorkTimes', label: 'New York Times' }
     ];
 
     const interest = [

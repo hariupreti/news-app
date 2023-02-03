@@ -10,7 +10,7 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import { useForm } from '@inertiajs/react';
 import axios from 'axios';
 
-export default function LeftSideItem({headlines}) {
+export default function LeftSideItem({headlines,toggle=()=> null }) {
     const [errorMsg,setErrorMsg] = useState("");
     const [searchArticles,setSearchArticles] = useState([]);
     const [isLoading,setIsLoading] = useState({loading:false});
@@ -82,7 +82,7 @@ export default function LeftSideItem({headlines}) {
                 {
                     searchArticles ?
                     searchArticles.map((eachHeadline,index) =>  {
-                        return <EachNews key={index} news={eachHeadline}></EachNews>
+                        return <EachNews selectNews={(news) => toggle(news)}  key={index} news={eachHeadline}></EachNews>
                     })
                     :<><div className='grid grid-flow-row gap-3 mb-20'>  <ComponentLoading></ComponentLoading> <ComponentLoading></ComponentLoading> <ComponentLoading></ComponentLoading> <ComponentLoading></ComponentLoading> <ComponentLoading></ComponentLoading> </div></>
                 }
@@ -92,7 +92,7 @@ export default function LeftSideItem({headlines}) {
                     {
                         headlines ?
                         headlines.map((eachHeadline,index) =>  {
-                            return <EachNews key={index} news={eachHeadline}></EachNews>
+                            return <EachNews selectNews={(news) => toggle(news)}  key={index} news={eachHeadline}></EachNews>
                         })
                         :<><div className='grid grid-flow-row gap-3 mb-20'>  <ComponentLoading></ComponentLoading> <ComponentLoading></ComponentLoading> <ComponentLoading></ComponentLoading> <ComponentLoading></ComponentLoading> <ComponentLoading></ComponentLoading> </div></>
                     }
@@ -103,7 +103,7 @@ export default function LeftSideItem({headlines}) {
                     {
                         headlines ?
                         headlines.map((eachHeadline,index) =>  {
-                            return <EachNews key={index} news={eachHeadline}></EachNews>
+                            return <EachNews selectNews={(news) => toggle(news)}  key={index} news={eachHeadline}></EachNews>
                         })
                         :<><div className='grid grid-flow-row gap-3 mb-20'>  <ComponentLoading></ComponentLoading> <ComponentLoading></ComponentLoading> <ComponentLoading></ComponentLoading> <ComponentLoading></ComponentLoading> <ComponentLoading></ComponentLoading> </div></>
                     }
