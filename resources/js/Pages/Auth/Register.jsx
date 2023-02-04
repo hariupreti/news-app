@@ -33,10 +33,10 @@ export default function Register() {
     return (
             <GuestLayout props={[]}>
             <Head title="Register" />
-            <div className="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0">
-            <div className="max-w-6xl mx-auto sm:px-6 lg:px-2 lg:-mt-52">
+            <div className="grid items-top min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0">
+            <div className="lg:w-3/12 sm:w-full mx-auto sm:px-6 lg:px-2 lg:-mt-52">
             <div className='w-[500px] m-2 p-10 mx-auto rounded-md border-gray-200 border bg-white '>
-            <div className='mb-10 text-center font-semibold'>Create Your Account</div>
+            <div className='mb-10 text-center font-semibold'>Create an account</div>
             <form onSubmit={submit}>
             <div>
             <InputLabel forInput="name" value="Name" />
