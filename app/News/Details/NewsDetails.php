@@ -71,7 +71,7 @@ class NewsDetails
                 return [
                     "description" => "User wants to view news from NewYorkTimes source",
                     "contract" => $this->newsContract,
-                    "news" => ["recentNews" => $this->getRecentNewsForNewYorkTimes()]
+                    "news" => ["recentNews" => $this->getRecentNewsForNewYorkTimes($interest)]
                 ];
                 break;
             default:
@@ -142,7 +142,6 @@ class NewsDetails
     }
 
     // NewsAPI API integration for various kind of news
-
     private function getTopHeadlinesForNewsAPI(){
         $urlForHeadlines = (string) $this->newsContract->source[2];
         $apikey = (string) $this->newsContract->source[1];
@@ -186,13 +185,14 @@ class NewsDetails
         $today = date("Y-m-d");
         $urlForRecentNews = (string) $this->newsContract->source[2];
         $apikey = (string) $this->newsContract->source[1];
-        $searchArticlesURL = "$urlForRecentNews/top-headlines?country=us&from=$today";
+        $searchArticlesURL = "$urlForRecentNews/top-headlines?q=$interest&country=us&from=$today";
         $response = Http::accept('application/json')
         ->withHeaders(['Authorization' => "Bearer $apikey"])
         ->get($searchArticlesURL)
         ->throw(function ($response, $e) {
-        })->json();
-        return RecentNews::collection($response);
+        });
+        $managedResponse = json_decode($response->body());
+        return RecentNews::collection($managedResponse->articles);
     }
 
     // TheGaurdian API integration for various kind of news
@@ -289,11 +289,11 @@ class NewsDetails
         return TheNewYorkTimesHomePageNewsResources::collection($decodedNews->response->docs);
     }
 
-    private function getRecentNewsForNewYorkTimes(){
+    private function getRecentNewsForNewYorkTimes($interest){
         $today = date("Y-m-d");
         $urlForHeadlines = (string) $this->newsContract->source[2];
         $apikey = (string) $this->newsContract->source[1];
-        $headlinesFullURL = "$urlForHeadlines/svc/search/v2/articlesearch.json?&begin_date=$today&api-key=$apikey";
+        $headlinesFullURL = "$urlForHeadlines/svc/search/v2/articlesearch.json?&q=$interest&api-key=$apikey";
         $response = Http::connectTimeout(120)->accept('application/json')
             ->get($headlinesFullURL)
             ->throw(function ($response, $e) {

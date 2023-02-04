@@ -5,24 +5,28 @@ export default function RightSideItem({userInterests=[],toggle=()=> null }) {
     const otherListStyle = "w-fit h-fit bg-gray-200 cursor-pointer hover:text-blue-600 float-left px-2 py-1 m-1 rounded-lg text-xs";
     const [recentNews,setRecentNews] = useState([]);
     const [userinterest,setUserInterest] = useState(["value"]);
+    const [isLoading,setLoading] = useState(false);
 
     const mostRecentNews = (value) => {
-        axios.get(route('getMostRecent', {"interest":value})).then( response => {
-            setRecentNews(response.data);
-        });
+        setLoading(true);
+        if(value != null || (recentNews != null && recentNews.length < 1)){
+            axios.get(route('getMostRecent', {"interest":value})).then( response => {
+                setRecentNews(response.data);
+            });
+        }
+        setLoading(false);
     }
 
     const searchInterestedNews = (value) => {
-        setRecentNews([]);
         setUserInterest({"value":value});
         mostRecentNews(value);
     }
 
     useEffect(() => {
-        if(recentNews && recentNews.length == 0){
+        if(recentNews != null && recentNews.length < 1){
             mostRecentNews()
         }
-    },[recentNews]);
+    });
 
     return (
         <div className='grid grid-flow-row'>
@@ -43,7 +47,7 @@ export default function RightSideItem({userInterests=[],toggle=()=> null }) {
             <div className='w-full'>
                 <ul>
                     {
-                        (recentNews && recentNews.length > 0 )? recentNews.map((eachNews,index) =>{
+                        ((recentNews && recentNews.length > 0) && !isLoading)? recentNews.map((eachNews,index) =>{
                                 return <EachRecentNews key={index} news={eachNews} selectNews={(news) => toggle(news)}></EachRecentNews>
                         }): [1,2,3,4,5].map((index) => {
                             return <EachRecentNews key={index} news={[]}></EachRecentNews>

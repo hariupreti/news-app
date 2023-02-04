@@ -19,7 +19,6 @@ class NewsController extends Controller
         $newsContract = $this->preferenceBasedNews();
         $news = $newsContract[0]->getHomePageNews();
         $interests = $newsContract[1];
-        // dd($news);
         return Inertia::render('Homepage',['topHeadlines'=>$news["news"]["headlines"],'source'=> $news["contract"]->source[0],"interests" => $interests]);
     }
 

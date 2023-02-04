@@ -23,7 +23,7 @@ NewsApp is built on the Laravel Framework, as we all know. One of its significa
    THENEWYORKTIME_API_KEY="The_New_York_API_key" //https://developer.nytimes.com
 ```
 
-Run docker command below:
+Docker Commands:
 ```php
    //Install required dependencies, select one database service pgsql,mysql..
    docker run --rm -u "$(id -u):$(id -g)" -v $(pwd):/opt -w /opt

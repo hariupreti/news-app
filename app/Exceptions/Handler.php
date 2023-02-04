@@ -2,8 +2,10 @@
 
 namespace App\Exceptions;
 
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use Illuminate\Http\Client\ConnectionException;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Inertia\Inertia;
 
 class Handler extends ExceptionHandler
 {
@@ -44,7 +46,13 @@ class Handler extends ExceptionHandler
     public function register()
     {
         $this->reportable(function (Throwable $e) {
-            //
         });
+        // $this->reportable(function (ConnectionException $e) {
+        //     return false;
+        // });
+        $this->renderable(function (ConnectionException $e, $request) {
+            return inertia("ExceptionHandling/ErrorPage",["code"=>901,"title"=>"No internet connection","description"=>$e->getMessage()]);
+        });
+
     }
 }
